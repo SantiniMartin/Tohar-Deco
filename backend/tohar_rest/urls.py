@@ -1,22 +1,9 @@
-"""
-URL configuration for tohar_rest project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path
+# tohar_rest/urls.py
+from django.urls import include, path
+from apps.users.admin import open_admin_site  # tu admin abierto
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('', home), DEFINIR PATH DE INCIO PLS
+    path('admin/', open_admin_site.urls),          # usa tu admin abierto
+    path('api/users/', include('apps.users.urls')),  # ruta correcta a tu app
 ]
