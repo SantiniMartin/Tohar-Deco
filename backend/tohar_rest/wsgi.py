@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tohar_rest.settings.local.py')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tohar_rest.settings')
 
 application = get_wsgi_application()
