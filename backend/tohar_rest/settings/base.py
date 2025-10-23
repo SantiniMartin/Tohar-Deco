@@ -30,10 +30,12 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
+    'users.apps.UsersConfig',
 ]
 
 THIRD_APPS = [
   'rest_framework',
+  'rest_framework_simplejwt',
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
