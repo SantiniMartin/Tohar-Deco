@@ -1,25 +1,30 @@
-from rest_framework import generics, permissions
-from .serializers import RegisterSerializer
-from .models import User
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny 
 
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
-    permission_classes = [permissions.AllowAny]
+from .serializers import RegisterSerializer # Importamos tu serializador
 
-
-class ProfileView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get(self, request):
-        user = request.user
-        return Response({
-            "username": user.username,
-            "email": user.email,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "role": user.role,
-            "phone": user.phone
-        })
+# Vista para manejar las peticiones de Registro
+class RegistrationView(APIView):
+    # Permite el acceso sin autenticación (ya que el usuario se está creando)
+    permission_classes = [AllowAny] 
+    
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            # Llama al método create() del serializador
+            user = serializer.save() 
+            
+            return Response(
+                {
+                    "message": "Registro exitoso.",
+                    "user_id": user.id,
+                    "email": user.email
+                }, 
+                status=status.HTTP_201_CREATED
+            )
+        
+        # Devuelve errores de validación (ej: contraseña débil, email repetido)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

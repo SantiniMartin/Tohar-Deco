@@ -1,14 +1,17 @@
 from django.urls import path
+# La vista de Login (JWT) y la vista de Registro
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import RegisterView, ProfileView
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import User
-
+from .views import RegistrationView
 
 urlpatterns = [
-    path('register/', RegisterView.as_view(), name='register'),
-    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('profile/', ProfileView.as_view(), name='profile'),
+    #ENDPOINT DE REGISTRO
+    # URL final: /api/auth/register/
+    path('register/', RegistrationView.as_view(), name='user_register'), 
+    
+    #ENDPOINT DE LOGIN (Obtener tokens)
+    # URL final: /api/auth/token/
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    
+    #ENDPOINT para renovar el token
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
